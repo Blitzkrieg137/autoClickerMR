@@ -21,10 +21,10 @@ public class ApplicationRun {
         /*TestBotMacros testBotMacros = new TestBotMacros();
         testBotMacros.testFocusMovement();*/
 
-        //basicMovements basicMovements = new BasicMovementsImpl();
-        //basicMovements.createRobot();
-        //basicMovements.holdButton(KeyEvent.VK_LEFT, 5);
-        //basicMovements.pressButtonOnce(66);
+        BasicMovements basicMovements = new BasicMovementsImpl();
+        basicMovements.createRobot();
+        basicMovements.holdButton(KeyEvent.VK_LEFT, 5);
+        basicMovements.pressButtonOnce(66);
 
         System.exit(1);
 

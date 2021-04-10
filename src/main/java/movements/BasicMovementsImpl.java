@@ -7,8 +7,7 @@ import java.awt.*;
 
 
 public class BasicMovementsImpl implements BasicMovements {
-    static Robot bot = null;
-
+    static Robot bot;
 
     public void createRobot() {
         createMovementRobotImpl();
