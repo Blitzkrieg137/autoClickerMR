@@ -1,4 +1,5 @@
 package focus;
+import com.sun.jna.Native;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 
@@ -9,8 +10,8 @@ public class WindowsFocusImpl implements WindowsFocus{
         getMapleOnFocus1();
     }
 
-    public static void getMapleOnFocus1(){
-        setFocusToWindowsApp("MapleRoyals April 2nd 2021", 0);
+    public void getMapleOnFocus1(){
+        setFocusToWindowsApp();
     }
 
 
@@ -41,31 +42,51 @@ public class WindowsFocusImpl implements WindowsFocus{
      *
      * A value supplied that is less that 0 or greater than 2 is automatically changed
      * to 0 (Normal State).
+     *                    int state = User32.SW_SHOWNORMAL; //default window state (Normal)
+     *         if (windowState.length > 0) {
+     *             state = windowState[0];
+     *             switch(state) {
+     *                 default:
+     *                 case 0:
+     *                     state = User32.SW_SHOWNORMAL;
+     *                     break;
+     *                 case 1:
+     *                     state = User32.SW_SHOWMAXIMIZED;
+     *                     break;
+     *                 case 2:
+     *                     state = User32.SW_SHOWMINIMIZED;
+     *                     break;
+     *             }
+     *         }
+     *
+     *         User32 user32 = User32.INSTANCE;
+     *         WinDef.HWND hWnd = user32.FindWindow(null, applicationTitle);
+     *         if (user32.IsWindowVisible(hWnd)) {
+     *             user32.ShowWindow(hWnd, state); //.SW_SHOW);
+     *             user32.SetForegroundWindow(hWnd);
+     *             user32.SetFocus(hWnd);
+     *         }
      */
-    public static void setFocusToWindowsApp(String applicationTitle, int... windowState) {
-        int state = User32.SW_SHOWNORMAL; //default window state (Normal)
-        if (windowState.length > 0) {
-            state = windowState[0];
-            switch(state) {
-                default:
-                case 0:
-                    state = User32.SW_SHOWNORMAL;
-                    break;
-                case 1:
-                    state = User32.SW_SHOWMAXIMIZED;
-                    break;
-                case 2:
-                    state = User32.SW_SHOWMINIMIZED;
-                    break;
-            }
-        }
+    public void setFocusToWindowsApp() {
+        // Loop all windows
+        User32.INSTANCE.EnumWindows((hWnd, data ) -> {
+            char[] name = new char[512];
 
-        User32 user32 = User32.INSTANCE;
-        WinDef.HWND hWnd = user32.FindWindow(null, applicationTitle);
-        if (user32.IsWindowVisible(hWnd)) {
-            user32.ShowWindow(hWnd, state); //.SW_SHOW);
-            user32.SetForegroundWindow(hWnd);
-            user32.SetFocus(hWnd);
-        }
+            User32.INSTANCE.GetWindowText( hWnd, name, name.length );
+            // Find window with title starting with downcase "MapleRoyals" string
+            if (Native.toString(name).startsWith("MapleRoyals")) {
+                // Bring the window to the front
+                User32.INSTANCE.SetForegroundWindow(hWnd);
+                User32.INSTANCE.SetFocus(hWnd);
+                System.out.println("found MapleRoyals Window");
+                return false; // Found
+            }
+            System.out.println("keep searching");
+            return true; // Keep searching
+        }, null );
     }
+
+
+
+
 }

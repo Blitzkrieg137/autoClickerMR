@@ -14,20 +14,19 @@ public class ApplicationRun {
 
     public static void main(String[] args) {
 
-        /*WindowsFocus windowsFocus = new WindowsFocusImpl();
-        windowsFocus.getMapleOnFocus();*/
+        WindowsFocus windowsFocus = new WindowsFocusImpl();
+        windowsFocus.getMapleOnFocus();
 
 
         /*TestBotMacros testBotMacros = new TestBotMacros();
         testBotMacros.testFocusMovement();*/
 
-        BasicMovements basicMovements = new BasicMovementsImpl();
-        basicMovements.createRobot();
-        basicMovements.holdButton(KeyEvent.VK_LEFT, 5);
+        //basicMovements basicMovements = new BasicMovementsImpl();
+        //basicMovements.createRobot();
+        //basicMovements.holdButton(KeyEvent.VK_LEFT, 5);
         //basicMovements.pressButtonOnce(66);
+
         System.exit(1);
-
-
 
     }
 }
