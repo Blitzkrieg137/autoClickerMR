@@ -17,17 +17,22 @@ public class DetectCharacterByImageImpl implements DetectCharacterByImage{
 
 
     public static void main(String[] args) throws MalformedURLException, UnsupportedEncodingException {
+        //Canvas canvas1 = new DesktopCanvas();
+       // canvas1.addBox(new DesktopScreenRegion(430,600,200,200)).display(100);
         detectCharacterImpl();
+
     }
 
     @Override
     public void detectCharacter() throws MalformedURLException, UnsupportedEncodingException {
         detectCharacterImpl();
+
     }
 
     private static void detectCharacterImpl() throws MalformedURLException, UnsupportedEncodingException {
         // Create a screen region object that corresponds to the default monitor in full screen
-        ScreenRegion s = new DesktopScreenRegion();
+
+        ScreenRegion s = new DesktopScreenRegion(430,600,200,200);
 
         String path = URLDecoder.decode("file:///C:/Users/T/Desktop/MapleBotImages/HeadBishop1.png", "UTF-8");
         System.out.println(new File(path).getPath());
@@ -39,10 +44,13 @@ public class DetectCharacterByImageImpl implements DetectCharacterByImage{
         // Wait for the target to become visible on the screen for at most 5 seconds
         // Once the target is visible, it returns a screen region object corresponding
         // to the region occupied by this target
-        ScreenRegion r = s.wait(imageTarget,5000);
+        ScreenRegion r = s.wait(imageTarget,100000);
+        System.out.println("found img");
+
 
         // Display "Hello World" next to the found target for 3 seconds
         Canvas canvas = new DesktopCanvas();
+        canvas.addBox(new DesktopScreenRegion(430,600,200,200)).display(100);
         canvas.addLabel(r, "Hello World").display(3);
 
     }
