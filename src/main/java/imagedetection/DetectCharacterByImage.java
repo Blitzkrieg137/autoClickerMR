@@ -6,5 +6,6 @@ import java.net.URL;
 
 public interface DetectCharacterByImage {
 
-    void detectCharacter() throws MalformedURLException, UnsupportedEncodingException;
+    boolean detectCharacterByImage(int endX, int endY, int xWidth, int yWidth, String imageName);
+
 }

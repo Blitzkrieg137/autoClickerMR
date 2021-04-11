@@ -2,6 +2,8 @@ package movements;
 
 import focus.WindowsFocus;
 import focus.WindowsFocusImpl;
+import imagedetection.DetectCharacterByImage;
+import imagedetection.DetectCharacterByImageImpl;
 import inputdetection.DetectKeyboardInput;
 import inputdetection.DetectKeyboardInputImpl;
 
@@ -41,14 +43,20 @@ public class BasicMovementsImpl implements BasicMovements {
 
     }
 
+    @Override
+    public void walkRightUntilRope(int endX, int endY, int xWidth, int yWidth, String imageName) {
+        walkRightUntilRopeImpl(endX,endY,xWidth,yWidth,imageName);
+    }
+
 
     public static void main(String[] args) throws InterruptedException {
-        for (int i = 0; i<=4; i++){
 
         //walkRightWithSkillImpl(994, 422, 870, 394, -10066347, -6702132);
         //walkLeftWithSkill();
-        }
+
 //Buffs after 4 circle
+
+        //walkRightUntilRope(460,600, 200,200, "HeadBishop1.png");
 
 
     }
@@ -163,6 +171,46 @@ public class BasicMovementsImpl implements BasicMovements {
             return false;
         }
     }
+
+
+
+
+
+    //walk right and jump on rope
+    private void walkRightUntilRopeImpl(int endX, int endY, int xWidth, int yWidth, String imageName) {
+        DetectKeyboardInput detectKeyboardInput= new DetectKeyboardInputImpl();
+        DetectCharacterByImage detectCharacterByImage = new DetectCharacterByImageImpl();
+        try {
+        while (!detectKeyboardInput.isKeyDown(VK_F12)) {
+            bot.keyPress(VK_RIGHT);
+            Thread.sleep(10);
+            if (detectCharacterByImage.detectCharacterByImage(endX, endY, xWidth, yWidth, imageName)){
+                System.out.println("reached jump destination");
+                bot.keyPress(VK_ALT);
+                Thread.sleep(10);
+                bot.keyPress(VK_UP);
+
+            }
+            bot.keyRelease(VK_RIGHT);
+            bot.keyRelease(VK_ALT);
+           break;
+        }
+        Thread.sleep(1000);
+        bot.keyRelease(VK_UP);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 
     public static void showPixelColorRGB(int endX, int endY){

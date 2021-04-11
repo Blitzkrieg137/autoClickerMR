@@ -1,3 +1,5 @@
+import imagedetection.DetectCharacterByImage;
+import imagedetection.DetectCharacterByImageImpl;
 import inputdetection.DetectKeyboardInput;
 import inputdetection.DetectKeyboardInputImpl;
 import movements.BasicMovements;
@@ -21,20 +23,14 @@ public class ApplicationRun {
         basicMovements.pressButtonOnce(VK_RIGHT);*/
 
 
-        DetectKeyboardInput detectKeyboardInput = new DetectKeyboardInputImpl();
+
+        /*for (int i = 0; i<=4; i++){
+        }*/
         BasicMovements basicMovements = new BasicMovementsImpl();
 
-
-
-
-
-
-        for (int i = 0; i<=4; i++){
-            basicMovements.walkRightWithSkill(994, 422, 870, 394, -10066347, -6702132);
-            basicMovements.walkLeftWithSkill(348, 455, 202, 506, -2250019, -10066347);
-        }
-
-
+        basicMovements.walkRightWithSkill(994, 422, 870, 394, -10066347, -6702132);
+        basicMovements.walkLeftWithSkill(348, 455, 202, 506, -2250019, -10066347);
+        basicMovements.walkRightUntilRope(460,600, 200,200, "HeadBishop1.png");
 
     }
 }
