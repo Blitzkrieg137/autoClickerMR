@@ -103,7 +103,6 @@ public class TestBotMacros {
 
     public static void showPixelColorRGB(int endX, int endY){
         System.out.println(bot.getPixelColor(endX, endY).getRGB());
-
     }
 
 

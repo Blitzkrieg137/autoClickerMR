@@ -169,13 +169,11 @@ public class BasicMovementsImpl implements BasicMovements {
     }
 
 
-    public void keyPressed(KeyEvent e)
-    {
-        if (e.getKeyChar() == VK_F12) {
-            System.out.println("Exiting");
-            System.exit(0);
-        }
+    public static void showPixelColorRGB(int endX, int endY){
+        System.out.println(bot.getPixelColor(endX, endY).getRGB());
     }
+
+
 
     /*
 UlU RECHTES HAUS BLAU
