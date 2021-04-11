@@ -15,6 +15,7 @@ import static java.awt.event.KeyEvent.*;
 
 public class BasicMovementsImpl implements BasicMovements {
     static Robot bot;
+    DetectKeyboardInput detectKeyboardInput = new DetectKeyboardInputImpl();
 
     static {
         try {
@@ -48,6 +49,11 @@ public class BasicMovementsImpl implements BasicMovements {
         walkRightUntilRopeImpl(endX,endY,xWidth,yWidth,imageName);
     }
 
+    @Override
+    public void buffAndClimbUpRope() {
+        buffAndClimbUpRopeImpl();
+    }
+
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -76,7 +82,7 @@ public class BasicMovementsImpl implements BasicMovements {
         }
     }
 
-    private void pressButtonOnceImpl(int keyToPress){
+    private static void pressButtonOnceImpl(int keyToPress){
         try {
             bot.keyPress(keyToPress);
             Thread.sleep(10);
@@ -88,7 +94,6 @@ public class BasicMovementsImpl implements BasicMovements {
 
     //walk right until given end values are found
     private void walkRightWithSkillImpl(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2) throws InterruptedException {
-        DetectKeyboardInput detectKeyboardInput= new DetectKeyboardInputImpl();
         while (!detectKeyboardInput.isKeyDown(VK_F12)) {
             if (movementRight( endX, endY, endX2, endY2, getPixelColorValue, getPixelColorValue2)){
                 System.out.println("reached destination");
@@ -131,7 +136,6 @@ public class BasicMovementsImpl implements BasicMovements {
 
     //walk left until given end values are found
     private void walkLeftWithSkillImpl(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2) throws InterruptedException {
-        DetectKeyboardInput detectKeyboardInput= new DetectKeyboardInputImpl();
         while (!detectKeyboardInput.isKeyDown(VK_F12)) {
             if (movementLeft( endX, endY, endX2, endY2, getPixelColorValue, getPixelColorValue2)){
                 System.out.println("reached destination");
@@ -172,13 +176,8 @@ public class BasicMovementsImpl implements BasicMovements {
         }
     }
 
-
-
-
-
     //walk right and jump on rope
     private void walkRightUntilRopeImpl(int endX, int endY, int xWidth, int yWidth, String imageName) {
-        DetectKeyboardInput detectKeyboardInput= new DetectKeyboardInputImpl();
         DetectCharacterByImage detectCharacterByImage = new DetectCharacterByImageImpl();
         try {
         while (!detectKeyboardInput.isKeyDown(VK_F12)) {
@@ -198,6 +197,32 @@ public class BasicMovementsImpl implements BasicMovements {
         Thread.sleep(1000);
         bot.keyRelease(VK_UP);
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //BUFF AND CLIMB ROPE
+    private void buffAndClimbUpRopeImpl() {
+        try {
+            while (!detectKeyboardInput.isKeyDown(VK_F12)) {
+                //BUFF
+                pressButtonOnceImpl(VK_C);
+                Thread.sleep(1000);
+                pressButtonOnceImpl(VK_2);
+                Thread.sleep(1000);
+                pressButtonOnceImpl(VK_3);
+                Thread.sleep(1000);
+                pressButtonOnceImpl(VK_4);
+                Thread.sleep(1000);
+                pressButtonOnceImpl(VK_5);
+                Thread.sleep(1000);
+                bot.keyPress(VK_UP);
+                Thread.sleep(2000);
+                bot.keyRelease(VK_UP);
+
+                break;
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

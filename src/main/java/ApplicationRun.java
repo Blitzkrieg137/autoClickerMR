@@ -28,9 +28,18 @@ public class ApplicationRun {
         }*/
         BasicMovements basicMovements = new BasicMovementsImpl();
 
-        basicMovements.walkRightWithSkill(994, 422, 870, 394, -10066347, -6702132);
-        basicMovements.walkLeftWithSkill(348, 455, 202, 506, -2250019, -10066347);
-        basicMovements.walkRightUntilRope(460,600, 200,200, "HeadBishop1.png");
+        //basicMovements.walkRightWithSkill(994, 422, 870, 394, -10066347, -6702132);
+       // basicMovements.walkLeftWithSkill(348, 455, 202, 506, -2250019, -10066347);
+        //basicMovements.walkRightUntilRope(460,600, 200,200, "HeadBishop1.png");
+        //BUFF AND GO UP
+       // basicMovements.buffAndClimbUpRope();
+        //START RIGHT / LEFT WALK SEQUENCE
+
+        //JUMP DOWN
+
+
+
+        //REPEAT ALL
 
     }
 }
