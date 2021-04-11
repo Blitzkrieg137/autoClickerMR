@@ -2,6 +2,8 @@ package movements;
 
 import focus.WindowsFocus;
 import focus.WindowsFocusImpl;
+import inputdetection.DetectKeyboardInput;
+import inputdetection.DetectKeyboardInputImpl;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -28,12 +30,23 @@ public class BasicMovementsImpl implements BasicMovements {
         pressButtonOnceImpl(keyToPress);
     }
 
+    @Override
+    public void walkRightWithSkill(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2) throws InterruptedException {
+        walkRightWithSkillImpl(endX, endY, endX2, endY2, getPixelColorValue, getPixelColorValue2);
+    }
+
+    @Override
+    public void walkLeftWithSkill(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2) throws InterruptedException {
+        walkLeftWithSkillImpl(endX, endY, endX2, endY2, getPixelColorValue, getPixelColorValue2);
+
+    }
+
 
     public static void main(String[] args) throws InterruptedException {
         for (int i = 0; i<=4; i++){
 
-        walkRightWithSkill();
-        walkLeftWithSkill();
+        //walkRightWithSkillImpl(994, 422, 870, 394, -10066347, -6702132);
+        //walkLeftWithSkill();
         }
 //Buffs after 4 circle
 
@@ -65,30 +78,14 @@ public class BasicMovementsImpl implements BasicMovements {
         }
     }
 
-
-
-/*    private static void holdButtonUntilPixelDetectImpl(int keyToHold, double secondsToHoldKey) throws InterruptedException {
-        double endTime = System.currentTimeMillis() + secondsToHoldKey* 1000;
-        while (System.currentTimeMillis() < endTime) {
-            System.out.println(movementRight( 514, 552));
-            if (movementRight( 514, 552)){
+    //walk right until given end values are found
+    private void walkRightWithSkillImpl(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2) throws InterruptedException {
+        DetectKeyboardInput detectKeyboardInput= new DetectKeyboardInputImpl();
+        while (!detectKeyboardInput.isKeyDown(VK_F12)) {
+            if (movementRight( endX, endY, endX2, endY2, getPixelColorValue, getPixelColorValue2)){
+                System.out.println("reached destination");
                 break;
             }else {
-                bot.keyPress(keyToHold);
-            }
-        }
-        System.out.println("reached destination");
-        bot.keyRelease(keyToHold);
-    }*/
-
-
-
-    private static void walkRightWithSkill() throws InterruptedException {
-        while (true) {
-            if (movementRight( 994, 422, 870, 394)){
-                break;
-            }else {
-
                 bot.keyPress(VK_RIGHT);
                 Thread.sleep(800);
                 bot.keyPress(VK_A);
@@ -103,22 +100,20 @@ public class BasicMovementsImpl implements BasicMovements {
                 Thread.sleep(10);
             }
         }
-        System.out.println("reached destination");
+        System.out.println("PRESSED F12");
 
     }
 
 
-    public static boolean movementRight(int endX, int endY, int endX2, int endY2){
+    public static boolean movementRight(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2){
         //stop when get to endX
         int endRgbXY = bot.getPixelColor(endX, endY).getRGB();
-        int whiteFace = -10066347;
         System.out.println(endRgbXY);
 
         int endRgbXY2 = bot.getPixelColor(endX2, endY2).getRGB();
-        int whiteFace2 = -6702132;
         System.out.println(endRgbXY);
 
-        if (endRgbXY == whiteFace && endRgbXY2 == whiteFace2){
+        if (endRgbXY == getPixelColorValue && endRgbXY2 == getPixelColorValue2){
             return true;
         }
         else{
@@ -126,9 +121,12 @@ public class BasicMovementsImpl implements BasicMovements {
         }
     }
 
-    private static void walkLeftWithSkill() throws InterruptedException {
-        while (true) {
-            if (movementLeft( 348, 455, 202, 506)){
+    //walk left until given end values are found
+    private void walkLeftWithSkillImpl(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2) throws InterruptedException {
+        DetectKeyboardInput detectKeyboardInput= new DetectKeyboardInputImpl();
+        while (!detectKeyboardInput.isKeyDown(VK_F12)) {
+            if (movementLeft( endX, endY, endX2, endY2, getPixelColorValue, getPixelColorValue2)){
+                System.out.println("reached destination");
                 break;
             }else {
                 bot.keyPress(VK_LEFT);
@@ -145,22 +143,20 @@ public class BasicMovementsImpl implements BasicMovements {
                 Thread.sleep(10);
             }
         }
-        System.out.println("reached destination");
+        System.out.println("PRESSED F12");
 
     }
 
 
-    public static boolean movementLeft(int endX, int endY, int endX2, int endY2){
+    public static boolean movementLeft(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2){
         //stop when get to endX
         int endRgbXY = bot.getPixelColor(endX, endY).getRGB();
-        int whiteFace = -2250019;
-        System.out.println("endRgbXY: " + endRgbXY);
+        System.out.println(endRgbXY);
 
         int endRgbXY2 = bot.getPixelColor(endX2, endY2).getRGB();
-        int whiteFace2 = -10066347;
-        System.out.println("endRgbXY2: " + endRgbXY2);
+        System.out.println(endRgbXY);
 
-        if (endRgbXY == whiteFace && endRgbXY2 == whiteFace2){
+        if (endRgbXY == getPixelColorValue && endRgbXY2 == getPixelColorValue2){
             return true;
         }
         else{
