@@ -8,6 +8,8 @@ import processfind.ProcessHandlingImpl;
 
 import java.awt.event.KeyEvent;
 
+import static java.awt.event.KeyEvent.VK_RIGHT;
+
 public class ApplicationRun {
 
 
@@ -15,18 +17,14 @@ public class ApplicationRun {
     public static void main(String[] args) {
 
         WindowsFocus windowsFocus = new WindowsFocusImpl();
-        windowsFocus.getMapleOnFocus();
-
-
-        /*TestBotMacros testBotMacros = new TestBotMacros();
-        testBotMacros.testFocusMovement();*/
-
         BasicMovements basicMovements = new BasicMovementsImpl();
-        basicMovements.createRobot();
-        basicMovements.holdButton(KeyEvent.VK_LEFT, 5);
-        basicMovements.pressButtonOnce(66);
 
-        System.exit(1);
+
+        windowsFocus.getMapleOnFocus();
+        basicMovements.holdButton(KeyEvent.VK_LEFT, 2);
+        basicMovements.pressButtonOnce(VK_RIGHT);
+
+        System.exit(0);
 
     }
 }

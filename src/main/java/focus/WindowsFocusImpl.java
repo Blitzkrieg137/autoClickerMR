@@ -5,17 +5,11 @@ import com.sun.jna.platform.win32.WinDef;
 
 public class WindowsFocusImpl implements WindowsFocus{
 
-
-    public void getMapleOnFocus() {
-        getMapleOnFocus1();
+    public void getMapleOnFocus(){
+        getMapleOnFocusImpl();
     }
 
-    public void getMapleOnFocus1(){
-        setFocusToWindowsApp();
-    }
-
-
-    /**
+    /*
      * Sets focus to a running windows application Windows Application. If the
      * handle of the desired application is not found then nothing happens.<pre>
      *
@@ -67,7 +61,8 @@ public class WindowsFocusImpl implements WindowsFocus{
      *             user32.SetFocus(hWnd);
      *         }
      */
-    public void setFocusToWindowsApp() {
+
+    public static void getMapleOnFocusImpl() {
         // Loop all windows
         User32.INSTANCE.EnumWindows((hWnd, data ) -> {
             char[] name = new char[512];
@@ -84,6 +79,10 @@ public class WindowsFocusImpl implements WindowsFocus{
             System.out.println("keep searching");
             return true; // Keep searching
         }, null );
+    }
+
+    public static void main(String[] args) {
+        getMapleOnFocusImpl();
     }
 
 
