@@ -8,6 +8,9 @@ import org.sikuli.api.DesktopScreenRegion;
 import org.sikuli.api.visual.Canvas;
 import org.sikuli.api.visual.DesktopCanvas;
 
+import java.sql.Time;
+import java.util.Date;
+
 import static java.awt.event.KeyEvent.VK_F12;
 import static java.awt.event.KeyEvent.VK_LEFT;
 
@@ -27,34 +30,48 @@ public class ApplicationRun {
 
 
         BasicMovements basicMovements = new BasicMovementsImpl();
+        DetectKeyboardInput detectKeyboardInput = new DetectKeyboardInputImpl();
 
-        for (int i = 0; i<=4; i++){
+        Date date = new Date();
+        System.out.println(date);
 
 
-        //LOWER STAGE
-        basicMovements.walkRightWithSkill(730, 600, 200, 200, "right.png");
-        basicMovements.walkLeftWithSkill(0, 600, 200, 200, "left.png");
+        for (int i = 0; i<=10; i++){
+                //LOWER STAGE
+                basicMovements.walkRightWithSkill(730, 380, 200, 100, "right.png");
+                basicMovements.walkLeftWithSkill(165, 415, 150, 45, "left.png");
 
-        basicMovements.walkRightUntilRope(457,600, 200,200, "HeadBishop1.png");
 
-        //BUFF AND GO UP
-        basicMovements.buffAndClimbUpRope();
-        //START RIGHT / LEFT WALK SEQUENCE
-        basicMovements.walkRightWithSkill(730, 444, 200, 200, "right.png");
-        basicMovements.walkLeftWithSkill(0, 444, 200, 200, "left.png");
-        //JUMP DOWN
-        Thread.sleep(1500);
-        basicMovements.jumpDown();
+                basicMovements.walkRightUntilRope(457, 600, 200, 200, "HeadBishop1.png");
+                    if (i % 2 == 1) {
+                        //CLIMB UP
+                        basicMovements.climbUpRope();
+                    } else {
+                        //BUFF AND CLIMB UP
+                        basicMovements.buffAndClimbUpRope();
+                    }
+
+                //UPPER STAGE
+                basicMovements.walkRightWithSkill(730, 220, 80, 100, "rightUp.png");
+                basicMovements.walkLeftWithSkill(350, 510, 80, 100, "leftUp.png");
+
+                //JUMP DOWN
+                Thread.sleep(1500);
+                basicMovements.jumpDown();
         }
+        //GET SAFE
+        basicMovements.walkRightUntilRope(457, 600, 200, 200, "HeadBishop1.png");
 
+        Date date2 = new Date();
+        System.out.println("BOT ENDE!");
+        System.out.println("TIMESTAMPS: " + date);
+        System.out.println("TIMESTAMPS: " + date2);
 
-        //DetectCharacterByImage detectCharacterByImage = new DetectCharacterByImageImpl();
-        //detectCharacterByImage.detectCharacterWalkRightLeft(420,551,135,15, "HeadBishop1.png");
         //Canvas canvas1 = new DesktopCanvas();
-        //canvas1.addBox(new DesktopScreenRegion(420,400,200,190)).display(100);
+        //canvas1.addBox(new DesktopScreenRegion(730,220,80,100)).display(10);
 
-        //BasicMovementsImpl basicMovements1 = new BasicMovementsImpl();
-        //basicMovements1.checkIfOnRope();
+
+
         //REPEAT ALL
 
         System.exit(0);

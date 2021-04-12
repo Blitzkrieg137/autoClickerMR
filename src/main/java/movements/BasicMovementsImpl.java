@@ -39,7 +39,6 @@ public class BasicMovementsImpl implements BasicMovements {
         walkRightWithSkillImpl(endX, endY, xWidth, yWidth, imageName);
     }
 
-
     @Override
     public void walkLeftWithSkill(int endX, int endY, int xWidth, int yWidth, String imageName) {
         walkLeftWithSkillImpl(endX, endY, xWidth, yWidth, imageName);
@@ -57,23 +56,15 @@ public class BasicMovementsImpl implements BasicMovements {
     }
 
     @Override
+    public void climbUpRope() {
+        climbUpRopeImpl();
+    }
+
+
+    @Override
     public void jumpDown() {
         jumpDownImpl();
     }
-
-
-    public static void main(String[] args) throws InterruptedException {
-
-        //walkRightWithSkillImpl(994, 422, 870, 394, -10066347, -6702132);
-        //walkLeftWithSkill();
-
-//Buffs after 4 circle
-
-        //walkRightUntilRope(460,600, 200,200, "HeadBishop1.png");
-
-
-    }
-
 
     private void holdButtonImpl(int keyToHold, double secondsToHoldKey) {
         try {
@@ -127,7 +118,8 @@ public class BasicMovementsImpl implements BasicMovements {
         }
     }
 
-    public void checkIfOnRope() {
+    //Rope check
+    private void checkIfOnRope() {
         DetectCharacterByImage detectCharacterByImage1 = new DetectCharacterByImageImpl();
         try {
         if (!detectCharacterByImage1.detectCharacterWalkRightLeft(420, 400, 200, 190, "HeadBishop1.png")) {
@@ -175,6 +167,21 @@ public class BasicMovementsImpl implements BasicMovements {
         }
     }
 
+    //CLIMB ROPE
+    private void climbUpRopeImpl() {
+        try {
+            while (!detectKeyboardInput.isKeyDown(VK_F12)) {
+                //BUFF
+                bot.keyPress(VK_UP);
+                Thread.sleep(2000);
+                bot.keyRelease(VK_UP);
+                break;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private void jumpDownImpl(){
         try {
             while (!detectKeyboardInput.isKeyDown(VK_F12)) {
@@ -203,18 +210,18 @@ public class BasicMovementsImpl implements BasicMovements {
                     break;
                 }
                 bot.keyPress(VK_RIGHT);
-                Thread.sleep(800);
+                Thread.sleep(400);
                 bot.keyPress(VK_A);
                 Thread.sleep(10);
                 bot.keyPress(VK_S);
                 Thread.sleep(10);
 
                 bot.keyRelease(VK_A);
+                Thread.sleep(10);
                 bot.keyRelease(VK_S);
                 Thread.sleep(10);
+                bot.keyRelease(VK_RIGHT);
             }
-            Thread.sleep(1000);
-            bot.keyRelease(VK_RIGHT);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -231,84 +238,28 @@ public class BasicMovementsImpl implements BasicMovements {
                     break;
                 }
                 bot.keyPress(VK_LEFT);
-                Thread.sleep(1000);
+                Thread.sleep(400);
                 bot.keyPress(VK_A);
                 Thread.sleep(10);
                 bot.keyPress(VK_S);
                 Thread.sleep(10);
 
                 bot.keyRelease(VK_A);
+                Thread.sleep(10);
                 bot.keyRelease(VK_S);
                 Thread.sleep(10);
+                bot.keyRelease(VK_LEFT);
             }
-            Thread.sleep(1000);
-            bot.keyRelease(VK_LEFT);
+
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-
-
-
-
-    public static void showPixelColorRGB(int endX, int endY){
+    @Deprecated
+    private static void showPixelColorRGB(int endX, int endY){
         System.out.println(bot.getPixelColor(endX, endY).getRGB());
     }
-
-
-
-    /*
-UlU RECHTES HAUS BLAU
-RGB: -10066347
-
-Physical: {X=994,Y=422}
-Scaled: {X=994,Y=422}
-Relative: {X=719,Y=-371}
-Dpi: 96
-Raw Dpi: 81
-Dpi Scaling: 1
-Dpi Ratio: 1,19
-Screen Resolution: {Width=1920, Height=1080}
-Pixel Color: #666655
-
-RGB: -6702132
-Physical: {X=870,Y=394}
-Scaled: {X=870,Y=394}
-Relative: {X=595,Y=-399}
-Dpi: 96
-Raw Dpi: 81
-Dpi Scaling: 1
-Dpi Ratio: 1,19
-Screen Resolution: {Width=1920, Height=1080}
-Pixel Color: #99BBCC
-
-UlU LINKES HAUS ROT
-RGB: -10070767
-
-Physical: {X=348,Y=455}
-Scaled: {X=348,Y=455}
-Relative: {X=-675,Y=-337}
-Dpi: 96
-Raw Dpi: 81
-Dpi Scaling: 1
-Dpi Ratio: 1,19
-Screen Resolution: {Width=1920, Height=1080}
-Pixel Color: #DDAADD
-
-RGB: -7842509
-Physical: {X=202,Y=506}
-Scaled: {X=202,Y=506}
-Relative: {X=-821,Y=-286}
-Dpi: 96
-Raw Dpi: 81
-Dpi Scaling: 1
-Dpi Ratio: 1,19
-Screen Resolution: {Width=1920, Height=1080}
-Pixel Color: #666655
-
-    */
-
 
  }

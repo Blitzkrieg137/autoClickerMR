@@ -8,6 +8,7 @@ public interface BasicMovements {
     void walkLeftWithSkill(int endX, int endY, int xWidth, int yWidth, String imageName);
     void walkRightUntilRope(int endX, int endY, int xWidth, int yWidth, String imageName);
     void buffAndClimbUpRope();
+    void climbUpRope();
     void jumpDown();
 
 }
