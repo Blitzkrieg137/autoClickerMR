@@ -7,5 +7,6 @@ import java.net.URL;
 public interface DetectCharacterByImage {
 
     boolean detectCharacterByImage(int endX, int endY, int xWidth, int yWidth, String imageName);
+    boolean detectCharacterWalkRightLeft(int endX, int endY, int xWidth, int yWidth, String imageName);
 
 }

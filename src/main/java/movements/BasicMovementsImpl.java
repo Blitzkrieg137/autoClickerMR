@@ -16,6 +16,7 @@ import static java.awt.event.KeyEvent.*;
 public class BasicMovementsImpl implements BasicMovements {
     static Robot bot;
     DetectKeyboardInput detectKeyboardInput = new DetectKeyboardInputImpl();
+    DetectCharacterByImage detectCharacterByImage = new DetectCharacterByImageImpl();
 
     static {
         try {
@@ -34,13 +35,14 @@ public class BasicMovementsImpl implements BasicMovements {
     }
 
     @Override
-    public void walkRightWithSkill(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2) throws InterruptedException {
-        walkRightWithSkillImpl(endX, endY, endX2, endY2, getPixelColorValue, getPixelColorValue2);
+    public void walkRightWithSkill(int endX, int endY, int xWidth, int yWidth, String imageName) {
+        walkRightWithSkillImpl(endX, endY, xWidth, yWidth, imageName);
     }
 
+
     @Override
-    public void walkLeftWithSkill(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2) throws InterruptedException {
-        walkLeftWithSkillImpl(endX, endY, endX2, endY2, getPixelColorValue, getPixelColorValue2);
+    public void walkLeftWithSkill(int endX, int endY, int xWidth, int yWidth, String imageName) {
+        walkLeftWithSkillImpl(endX, endY, xWidth, yWidth, imageName);
 
     }
 
@@ -52,6 +54,11 @@ public class BasicMovementsImpl implements BasicMovements {
     @Override
     public void buffAndClimbUpRope() {
         buffAndClimbUpRopeImpl();
+    }
+
+    @Override
+    public void jumpDown() {
+        jumpDownImpl();
     }
 
 
@@ -92,111 +99,51 @@ public class BasicMovementsImpl implements BasicMovements {
         }
     }
 
-    //walk right until given end values are found
-    private void walkRightWithSkillImpl(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2) throws InterruptedException {
-        while (!detectKeyboardInput.isKeyDown(VK_F12)) {
-            if (movementRight( endX, endY, endX2, endY2, getPixelColorValue, getPixelColorValue2)){
-                System.out.println("reached destination");
-                break;
-            }else {
-                bot.keyPress(VK_RIGHT);
-                Thread.sleep(800);
-                bot.keyPress(VK_A);
-                Thread.sleep(10);
-                bot.keyPress(VK_S);
-                Thread.sleep(10);
-                bot.keyRelease(VK_RIGHT);
-
-
-                bot.keyRelease(VK_A);
-                bot.keyRelease(VK_S);
-                Thread.sleep(10);
-            }
-        }
-        System.out.println("PRESSED F12");
-
-    }
-
-
-    public static boolean movementRight(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2){
-        //stop when get to endX
-        int endRgbXY = bot.getPixelColor(endX, endY).getRGB();
-        System.out.println(endRgbXY);
-
-        int endRgbXY2 = bot.getPixelColor(endX2, endY2).getRGB();
-        System.out.println(endRgbXY);
-
-        if (endRgbXY == getPixelColorValue && endRgbXY2 == getPixelColorValue2){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    //walk left until given end values are found
-    private void walkLeftWithSkillImpl(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2) throws InterruptedException {
-        while (!detectKeyboardInput.isKeyDown(VK_F12)) {
-            if (movementLeft( endX, endY, endX2, endY2, getPixelColorValue, getPixelColorValue2)){
-                System.out.println("reached destination");
-                break;
-            }else {
-                bot.keyPress(VK_LEFT);
-                Thread.sleep(800);
-                bot.keyPress(VK_A);
-                Thread.sleep(10);
-                bot.keyPress(VK_S);
-                Thread.sleep(10);
-                bot.keyRelease(VK_LEFT);
-
-
-                bot.keyRelease(VK_A);
-                bot.keyRelease(VK_S);
-                Thread.sleep(10);
-            }
-        }
-        System.out.println("PRESSED F12");
-
-    }
-
-
-    public static boolean movementLeft(int endX, int endY, int endX2, int endY2, int getPixelColorValue, int getPixelColorValue2){
-        //stop when get to endX
-        int endRgbXY = bot.getPixelColor(endX, endY).getRGB();
-        System.out.println(endRgbXY);
-
-        int endRgbXY2 = bot.getPixelColor(endX2, endY2).getRGB();
-        System.out.println(endRgbXY);
-
-        if (endRgbXY == getPixelColorValue && endRgbXY2 == getPixelColorValue2){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
     //walk right and jump on rope
     private void walkRightUntilRopeImpl(int endX, int endY, int xWidth, int yWidth, String imageName) {
-        DetectCharacterByImage detectCharacterByImage = new DetectCharacterByImageImpl();
         try {
-        while (!detectKeyboardInput.isKeyDown(VK_F12)) {
-            bot.keyPress(VK_RIGHT);
-            Thread.sleep(10);
-            if (detectCharacterByImage.detectCharacterByImage(endX, endY, xWidth, yWidth, imageName)){
-                System.out.println("reached jump destination");
+            while (!detectKeyboardInput.isKeyDown(VK_F12)) {
+                while (!detectCharacterByImage.detectCharacterWalkRightLeft(endX, endY, xWidth, yWidth, imageName)) {
+                    bot.keyPress(VK_RIGHT);
+                    Thread.sleep(10);
+                    System.out.println("walk right");
+
+                }
+                bot.keyRelease(VK_RIGHT);
+                System.out.println("jump");
                 bot.keyPress(VK_ALT);
                 Thread.sleep(10);
                 bot.keyPress(VK_UP);
-
+                bot.keyRelease(VK_ALT);
+                Thread.sleep(1000);
+                bot.keyRelease(VK_UP);
+                break;
             }
-            bot.keyRelease(VK_RIGHT);
-            bot.keyRelease(VK_ALT);
-           break;
-        }
-        Thread.sleep(1000);
-        bot.keyRelease(VK_UP);
+            System.out.println("check if on rope");
+            checkIfOnRope();
 
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void checkIfOnRope() {
+        DetectCharacterByImage detectCharacterByImage1 = new DetectCharacterByImageImpl();
+        try {
+        if (!detectCharacterByImage1.detectCharacterWalkRightLeft(420, 400, 200, 190, "HeadBishop1.png")) {
+                bot.keyPress(VK_LEFT);
+                Thread.sleep(100);
+                bot.keyPress(VK_A);
+                Thread.sleep(500);
+                System.out.println("teleport left");
+
+                bot.keyRelease(VK_A);
+                bot.keyRelease(VK_LEFT);
+
+            if (!detectCharacterByImage1.detectCharacterWalkRightLeft(420, 400, 200, 190, "HeadBishop1.png")){
+            walkRightUntilRopeImpl(457,600, 200,200, "HeadBishop1.png");
+            }
+        }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -228,11 +175,79 @@ public class BasicMovementsImpl implements BasicMovements {
         }
     }
 
+    private void jumpDownImpl(){
+        try {
+            while (!detectKeyboardInput.isKeyDown(VK_F12)) {
+                //BUFF
+                bot.keyPress(VK_DOWN);
+                pressButtonOnceImpl(VK_ALT);
+                Thread.sleep(1000);
+                pressButtonOnceImpl(VK_ALT);
+                Thread.sleep(500);
+                pressButtonOnceImpl(VK_ALT);
+                bot.keyRelease(VK_DOWN);
+                break;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
+    //walk right until end values are found
+    private void walkRightWithSkillImpl(int endX, int endY, int xWidth, int yWidth, String imageName) {
+        try {
+            while (!detectKeyboardInput.isKeyDown(VK_F12)) {
+                if (detectCharacterByImage.detectCharacterWalkRightLeft(endX, endY, xWidth, yWidth, imageName)){
+                    System.out.println("reached destination");
+                    break;
+                }
+                bot.keyPress(VK_RIGHT);
+                Thread.sleep(800);
+                bot.keyPress(VK_A);
+                Thread.sleep(10);
+                bot.keyPress(VK_S);
+                Thread.sleep(10);
+
+                bot.keyRelease(VK_A);
+                bot.keyRelease(VK_S);
+                Thread.sleep(10);
+            }
+            Thread.sleep(1000);
+            bot.keyRelease(VK_RIGHT);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
+    //walk right until end values are found
+    private void walkLeftWithSkillImpl(int endX, int endY, int xWidth, int yWidth, String imageName) {
+        try {
+            while (!detectKeyboardInput.isKeyDown(VK_F12)) {
+                if (detectCharacterByImage.detectCharacterWalkRightLeft(endX, endY, xWidth, yWidth, imageName)){
+                    System.out.println("reached destination");
+                    break;
+                }
+                bot.keyPress(VK_LEFT);
+                Thread.sleep(1000);
+                bot.keyPress(VK_A);
+                Thread.sleep(10);
+                bot.keyPress(VK_S);
+                Thread.sleep(10);
 
+                bot.keyRelease(VK_A);
+                bot.keyRelease(VK_S);
+                Thread.sleep(10);
+            }
+            Thread.sleep(1000);
+            bot.keyRelease(VK_LEFT);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 

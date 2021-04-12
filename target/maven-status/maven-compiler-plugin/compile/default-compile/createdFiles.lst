@@ -1,0 +1,12 @@
+focus\WindowsFocus.class
+bots\TestBotMacros.class
+inputdetection\DetectKeyboardInput.class
+movements\BasicMovements.class
+movements\BasicMovementsImpl.class
+ApplicationRun.class
+imagedetection\DetectCharacterByImage.class
+processfind\ProcessHandlingImpl.class
+focus\WindowsFocusImpl.class
+imagedetection\DetectCharacterByImageImpl.class
+inputdetection\DetectKeyboardInputImpl.class
+processfind\ProcessHandling.class
